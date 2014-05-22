@@ -18,10 +18,14 @@ class Environment(object):
         else:
             self.settings = {}
         self.initenv = initenv
+        self.extenv = {}
+        if config.cp.has_section('env'):
+            self.extenv.update(config.cm.items('env'))
 
     def get_environment(self, message, slot):
         project = message['_project']
         env = self.initenv.copy()
+        env.update(self.extenv)
         env['SCRAPY_SLOT'] = str(slot)
         env['SCRAPY_PROJECT'] = project
         env['SCRAPY_SPIDER'] = message['_spider']
