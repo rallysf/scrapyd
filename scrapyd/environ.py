@@ -20,7 +20,7 @@ class Environment(object):
         self.initenv = initenv
         self.extenv = {}
         if config.cp.has_section('env'):
-            self.extenv.update(config.cm.items('env'))
+            self.extenv.update(config.cp.items('env'))
 
     def get_environment(self, message, slot):
         project = message['_project']
