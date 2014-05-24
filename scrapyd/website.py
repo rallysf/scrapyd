@@ -72,8 +72,8 @@ class Home(resource.Resource):
 <p>Available projects: <b>%(projects)s</b></p>
 <ul>
 <li><a href="/jobs">Jobs</a></li>
-"""
-        if local_items:
+""" % vars
+        if self.local_items:
             s += '<li><a href="/items/">Items</a></li>'
         s += """
 <li><a href="/logs/">Logs</a></li>
@@ -92,7 +92,7 @@ monitoring)</p>
 </body>
 </html>
 """ % vars
-
+        return s
 
 class Jobs(resource.Resource):
 
@@ -139,7 +139,8 @@ class Jobs(resource.Resource):
             s += "<td></td>"
             s += "<td>%s</td>" % (p.end_time - p.start_time)
             s += "<td><a href='/logs/%s/%s/%s.log'>Log</a></td>" % (p.project, p.spider, p.job)
-            s += "<td><a href='/items/%s/%s/%s.jl'>Items</a></td>" % (p.project, p.spider, p.job)
+            if self.local_items:
+                s += "<td><a href='/items/%s/%s/%s.jl'>Items</a></td>" % (p.project, p.spider, p.job)
             s += "</tr>"
         s += "</table>"
         s += "</body>"
